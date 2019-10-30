@@ -97,14 +97,14 @@ public class Pedido
      * como parámetro
      */
     public boolean masAntiguoQue(Pedido otro) {
-         return this.fecha < otro.fecha;
+         return fecha.antesQue(otro.getFecha());
     }
     
-     // /**
-     // * devuelve una referencia al pedido actual
-     // */
-    // public    getPedidoActual() {
-        
-    // }
+     /**
+     * devuelve una referencia al pedido actual
+     */
+    public Pedido getPedidoActual() {
+        return this;
+    }
 
 }
