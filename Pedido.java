@@ -16,44 +16,51 @@ public class Pedido
     /**
      * Constructor  
      */
-    public Pedido()    {
-         
+    public Pedido(Fecha fecha, Cliente cliente, LineaPedido linea1, LineaPedido linea2)    {
+         this.fecha = fecha;
+         this.cliente = cliente;
+         this.linea1 = linea1;
+         this.linea2 = linea2;
     }
 
     /**
      * accesor para la fecha del pedido
      */
-    public   getFecha() {
-         
+    public Fecha getFecha() {
+         return fecha;
     }
 
     /**
      * accesor para el cliente
      */
-    public   getCliente() {
-         
+    public Cliente getCliente() {
+         return cliente;
     }
-    
     
     /**
      * calcular y devolver el importe total del pedido sin Iva
      */
-    public   getImporteAntesIva() {
-         
+    public double getImporteAntesIva() {
+        double prod = linea1.getProducto().getPrecio() * linea1.getCantidad() +
+        linea2.getProducto().getPrecio() * linea2.getCantidad() ;
+        return prod;
     }
 
     /**
      * calcular y devolver el iva a aplicar
      */
-    public   getIva() {
-         
+    public double getIva() {
+        double iva = getImporteAntesIva() * IVA;
+        return iva;
     }
 
     /**
      * calcular y devolver el importe total del pedido con Iva
      */
-    public   getImporteTotal() {
-         
+    public double getImporteTotal() {
+       double importe = (linea1.getProducto().getPrecio() * linea1.getCantidad() +
+        linea2.getProducto().getPrecio() * linea2.getCantidad()) + getIva();
+       return importe;  
     }
 
     /**
@@ -61,23 +68,43 @@ public class Pedido
      * (ver enunciado)
      */
     public String toString() {
-        
+        String str = "FECHA PEDIDO: " + fecha.toString() + 
+        "\nDATOS DEL CLIENTE " +
+        "\n" + cliente.toString() +
+        "\n**** Artículos en el pedido ****" +
+        "\n" + linea1.toString() +
+        "\n" + linea2.toString() +
+        "\n **** A pagar **** ";
+        str += String.format("%20s%8.2f" , "IMPORTE SIN IVA: ", getImporteAntesIva());
+        str += String.format("%20s%8.2f" , "IVA: ", getIva());
+        str += String.format("%20s%8.2f" , "IMPORTE TOTAL: ", getImporteTotal());
+        return str;
     }
-    
-    
+
+    /**
+     * 
+     * Para probar el toString
+     * 
+     * 
+     */
+    public void print()
+    {
+        System.out.println(toString());
+    }
+   
     /**
      * devuelve true si el pedido actual es más antiguo que el recibido 
      * como parámetro
      */
     public boolean masAntiguoQue(Pedido otro) {
-         
+         return this.fecha < otro.fecha;
     }
     
-     /**
-     * devuelve una referencia al pedido actual
-     */
-    public    getPedidoActual() {
+     // /**
+     // * devuelve una referencia al pedido actual
+     // */
+    // public    getPedidoActual() {
         
-    }
+    // }
 
 }
